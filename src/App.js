@@ -7,13 +7,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import { db } from './firebase-config';
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs} from "firebase/firestore";
 
 
 import { AddCircleOutlineRounded } from '@material-ui/icons';
 
 import {
-  Typography, Button, TextField, RadioGroup, FormControlLabel, Radio, Paper, makeStyles, withStyles
+  Typography, FormLabel ,Button, TextField, RadioGroup, FormControlLabel, Radio, Paper, makeStyles, withStyles
 } from '@material-ui/core';
 
 
@@ -73,13 +73,20 @@ function App() {
 
   const getData = async () => {
     let list = [];
-    const docSnap = await getDocs(collection(db, "cafes"));
+   /*  const q = query(collection(db, "cafes"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const cities = [];
+      querySnapshot.forEach((doc) => {
+        list.push(doc.data());
+      }); */
+
+      const docSnap = await getDocs(collection(db, "cafes"));
     docSnap.forEach((doc) => {
       console.log(doc.data())
       list.push(doc.data())
     })
-    setCafe(list)
-
+      setCafe(list)
+      console.log("");
   }
 
   useEffect(() => {
@@ -94,6 +101,8 @@ function App() {
 
 
   const addCafe = (event) => {
+
+    // console.log(name,city,pincode,offer)
     event.preventDefault();
     try {
       const docRef = addDoc(collection(db, "cafes"), {
@@ -159,6 +168,7 @@ function App() {
           value={pincode}
           onChange={event => setPincode(event.target.value)}
         />
+        <FormLabel >Cafe offers </FormLabel>
         <RadioGroup aria-label="quiz" name="quiz" onChange={event => setOffer(event.target.value)}>
           <FormControlLabel value="yes" control={<Radio />} label="Yes" />
           <FormControlLabel value="no" control={<Radio />} label="No" />
@@ -194,8 +204,9 @@ function App() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {cafes.map((row) => (
-              <StyledTableRow key={row.name}>
+            {cafes.map((row ,idx) => (
+
+              <StyledTableRow key={idx}>
                 <StyledTableCell component="th" scope="row">
                   {row.name}
                 </StyledTableCell>
