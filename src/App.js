@@ -13,7 +13,7 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { AddCircleOutlineRounded } from '@material-ui/icons';
 
 import {
-  Button, TextField,  RadioGroup, FormControlLabel, Radio, Paper, makeStyles,withStyles
+  Typography, Button, TextField, RadioGroup, FormControlLabel, Radio, Paper, makeStyles, withStyles
 } from '@material-ui/core';
 
 
@@ -71,16 +71,16 @@ function App() {
 
 
 
-   const getData = async()=>{
-let list=[];
-    const docSnap =  await  getDocs(collection(db,"cafes"));
-        docSnap.forEach((doc)=>{
-          console.log(doc.data())
-          list.push(doc.data())
-        })
-        setCafe(list)
+  const getData = async () => {
+    let list = [];
+    const docSnap = await getDocs(collection(db, "cafes"));
+    docSnap.forEach((doc) => {
+      console.log(doc.data())
+      list.push(doc.data())
+    })
+    setCafe(list)
 
-   }
+  }
 
   useEffect(() => {
     console.log('useEffect Hook!!!');
@@ -116,7 +116,10 @@ let list=[];
   return (
 
     <Paper elevation={2} className={classes.container}>
-      <h2>Create Cafe</h2>
+      <Typography variant="h4" component="h4">
+       Create Cafe
+      </Typography>
+
       <form noValidate >
         <TextField
           variant="outlined"
@@ -181,30 +184,30 @@ let list=[];
       </form>
 
       <TableContainer component={Paper}>
-     <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Cafe-Name</StyledTableCell>
-            <StyledTableCell align="right">City</StyledTableCell>
-            <StyledTableCell align="right">Pincode</StyledTableCell>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Cafe-Name</StyledTableCell>
+              <StyledTableCell >City</StyledTableCell>
+              <StyledTableCell >Pincode</StyledTableCell>
 
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {cafes.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.city}</StyledTableCell>
-              <StyledTableCell align="right">{row.pincode}</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {cafes.map((row) => (
+              <StyledTableRow key={row.name}>
+                <StyledTableCell component="th" scope="row">
+                  {row.name}
+                </StyledTableCell>
+                <StyledTableCell >{row.city}</StyledTableCell>
+                <StyledTableCell >{row.pincode}</StyledTableCell>
 
 
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
     </Paper>
 
